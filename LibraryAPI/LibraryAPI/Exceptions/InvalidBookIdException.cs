@@ -1,0 +1,14 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace LibraryAPI.Exceptions
+{
+    public class InvalidBookIdException:Exception
+    {
+        public InvalidBookIdException(string Message):base(Message)
+        {
+        }
+    }
+}

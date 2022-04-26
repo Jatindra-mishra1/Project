@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using LibraryAPI.Models;
+using LibraryAPI.Exceptions;
 namespace LibraryAPI.Controllers
 {
     [Route("api/[controller]")]
@@ -22,7 +23,8 @@ namespace LibraryAPI.Controllers
         public Admin Check(LogInModel LoginData)
         {
             var context = new libraryContext();
-            return context.Admins.FirstOrDefault(a=>a.Email==LoginData.Email && a.Password==LoginData.Password);
+            try { var Admin= context.Admins.FirstOrDefault(a => a.Email == LoginData.Email && a.Password == LoginData.Password); return Admin;
+            } catch (Exception) { return null; }
         }
         [HttpPost]
         [Route("add_admin")]
@@ -42,19 +44,23 @@ namespace LibraryAPI.Controllers
         }
         [Route("dismiss_admin")]
         public bool DismissAdmin(int AdminId)
+        {
+            var context = new libraryContext();
+            try
             {
-                var context = new libraryContext();
-                try
-                {
-                    context.Admins.Remove(context.Admins.Find(AdminId));
-                    context.SaveChangesAsync();
-                    return true;
-                }
-                catch (Exception)
-                {
-                    return false;
-                }
+                Admin _Admin = context.Admins.Find(AdminId);
+                if (_Admin is null)
+                    throw new AdminNotFoundException("Admin Not Found");
+                context.Admins.Remove(_Admin);
+                context.SaveChangesAsync();
+                return true;
             }
+            catch (AdminNotFoundException ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false;
+            }
+        }
 
     }
 }

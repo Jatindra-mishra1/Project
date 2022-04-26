@@ -99,22 +99,23 @@ namespace LibraryAPI.Models
 
             modelBuilder.Entity<Student>(entity =>
             {
-                entity.HasKey(e => e.Email)
-                    .HasName("PK__student__AB6E6165D91A0D23");
+                entity.ToTable("students");
 
-                entity.ToTable("student");
-
-                entity.Property(e => e.Email)
-                    .HasMaxLength(30)
-                    .IsUnicode(false)
-                    .HasColumnName("email");
+                entity.Property(e => e.StudentId).HasColumnName("studentId");
 
                 entity.Property(e => e.Address)
                     .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasColumnName("address");
 
+                entity.Property(e => e.Email)
+                    .IsRequired()
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("email");
+
                 entity.Property(e => e.Password)
+                    .IsRequired()
                     .HasMaxLength(15)
                     .IsUnicode(false)
                     .HasColumnName("password");
@@ -125,9 +126,10 @@ namespace LibraryAPI.Models
                     .HasColumnName("phone");
 
                 entity.Property(e => e.StudentName)
+                    .IsRequired()
                     .HasMaxLength(30)
-                    .IsUnicode(false)
-                    .HasColumnName("studentName");
+                    .HasColumnName("studentName")
+                    .IsFixedLength(true);
 
                 entity.Property(e => e.UserName)
                     .HasMaxLength(30)
@@ -137,22 +139,23 @@ namespace LibraryAPI.Models
 
             modelBuilder.Entity<Teacher>(entity =>
             {
-                entity.HasKey(e => e.Email)
-                    .HasName("PK__teacher__AB6E61656C264E77");
+                entity.ToTable("teachers");
 
-                entity.ToTable("teacher");
-
-                entity.Property(e => e.Email)
-                    .HasMaxLength(30)
-                    .IsUnicode(false)
-                    .HasColumnName("email");
+                entity.Property(e => e.TeacherId).HasColumnName("teacherId");
 
                 entity.Property(e => e.Address)
                     .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasColumnName("address");
 
+                entity.Property(e => e.Email)
+                    .IsRequired()
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("email");
+
                 entity.Property(e => e.Password)
+                    .IsRequired()
                     .HasMaxLength(15)
                     .IsUnicode(false)
                     .HasColumnName("password");
@@ -163,9 +166,10 @@ namespace LibraryAPI.Models
                     .HasColumnName("phone");
 
                 entity.Property(e => e.TeacherName)
+                    .IsRequired()
                     .HasMaxLength(30)
-                    .IsUnicode(false)
-                    .HasColumnName("teacherName");
+                    .HasColumnName("teacherName")
+                    .IsFixedLength(true);
 
                 entity.Property(e => e.UserName)
                     .HasMaxLength(30)

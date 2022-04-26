@@ -7,6 +7,7 @@ namespace LibraryAPI.Models
 {
     public partial class Teacher
     {
+        public int TeacherId { get; set; }
         public string TeacherName { get; set; }
         public string Email { get; set; }
         public string UserName { get; set; }
